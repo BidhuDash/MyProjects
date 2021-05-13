@@ -1,0 +1,28 @@
+server:
+  port: 9001
+
+spring:
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway:
+      routes:
+        -
+          id: FAMILY-SERVICE
+          predicates:
+            - Path=/family/**
+          uri: lb://FAMILY-SERVICE
+        -
+          id: HOME-SERVICE
+          predicates:
+            - Path=/home/**
+          uri: lb://HOME-SERVICE
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    server-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
